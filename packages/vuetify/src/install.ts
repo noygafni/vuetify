@@ -46,7 +46,7 @@ export function install (Vue: VueConstructor, args: VuetifyUseOptions = {}) {
         options.vuetify.init(this, options.ssrContext)
         this.$vuetify = Vue.observable(options.vuetify.framework)
       } else if (process.env.NODE_ENV === 'development') {
-        throw new Error('Vuetify is not properly initialized, see https://vuetifyjs.com/en/getting-started/quick-start#bootstrapping-the-vuetify-object')
+        throw new Error('Vuetify is not properly initialized, see https://vuetifyjs.com/getting-started/quick-start#bootstrapping-the-vuetify-object')
       }
     },
   })
