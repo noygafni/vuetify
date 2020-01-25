@@ -16,7 +16,7 @@ const baseMixins = mixins(VSimpleTable)
 
 interface options extends InstanceType<typeof baseMixins> {
   $refs: {
-    table: HTMLElement
+    wrapper: HTMLElement
   }
   cachedItems: VNodeChildren
 }
@@ -41,6 +41,10 @@ export default baseMixins.extend<options>().extend({
       type: Number,
       default: 48,
     },
+    expansion: {
+      type: Object as PropType<any[]>,
+      default: () => ({}),
+    },
   },
 
   data: () => ({
@@ -55,7 +59,9 @@ export default baseMixins.extend<options>().extend({
       return this.items.length
     },
     totalHeight (): number {
-      return (this.itemsLength * this.rowHeight) + this.headerHeight
+      // This assumes each expanded row will be the same height as normal rows
+      const expansionHeight = Object.keys(this.expansion).length * this.rowHeight
+      return (this.itemsLength * this.rowHeight) + this.headerHeight + expansionHeight
     },
     topIndex (): number {
       return Math.floor(this.scrollTop / this.rowHeight)
@@ -83,7 +89,7 @@ export default baseMixins.extend<options>().extend({
     },
     items () {
       this.cachedItems = null
-      this.$refs.table.scrollTop = 0
+      this.$refs.wrapper.scrollTop = 0
     },
   },
 
@@ -94,11 +100,11 @@ export default baseMixins.extend<options>().extend({
   mounted () {
     this.scrollDebounce = debounce(this.onScroll, 50)
 
-    this.$refs.table.addEventListener('scroll', this.scrollDebounce, { passive: true })
+    this.$refs.wrapper.addEventListener('scroll', this.scrollDebounce, { passive: true })
   },
 
   beforeDestroy () {
-    this.$refs.table.removeEventListener('scroll', this.scrollDebounce)
+    this.$refs.wrapper.removeEventListener('scroll', this.scrollDebounce)
   },
 
   methods: {
@@ -108,15 +114,11 @@ export default baseMixins.extend<options>().extend({
       }
     },
     genBody () {
-      if (this.cachedItems === null || this.chunkIndex !== this.oldChunk) {
-        this.cachedItems = this.genItems()
-        this.oldChunk = this.chunkIndex
-      }
+      this.cachedItems = this.genItems()
+      this.oldChunk = this.chunkIndex
 
       return this.$createElement('tbody', [
-        this.$createElement('tr', { style: this.createStyleHeight(this.offsetTop) }),
         this.cachedItems,
-        this.$createElement('tr', { style: this.createStyleHeight(this.offsetBottom) }),
       ])
     },
     genItems () {
@@ -128,10 +130,10 @@ export default baseMixins.extend<options>().extend({
     },
     genTable () {
       return this.$createElement('div', {
-        ref: 'table',
         staticClass: 'v-virtual-table__table',
+        style: this.createStyleHeight(this.totalHeight),
       }, [
-        this.$createElement('table', [
+        this.$createElement('table', { style: { marginTop: `${this.offsetTop}px` } }, [
           this.$slots['body.before'],
           this.genBody(),
           this.$slots['body.after'],
@@ -140,6 +142,7 @@ export default baseMixins.extend<options>().extend({
     },
     genWrapper () {
       return this.$createElement('div', {
+        ref: 'wrapper',
         staticClass: 'v-virtual-table__wrapper',
         style: {
           height: convertToUnit(this.height),
