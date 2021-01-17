@@ -45,6 +45,14 @@ export default baseMixins.extend<options>().extend({
       type: Object,
       default: () => ({}),
     },
+    expansionHeight: {
+      type: Number,
+      default: 0,
+    },
+    visibleItems: {
+      type: Number,
+      default: 15,
+    },
   },
 
   data: () => ({
@@ -60,8 +68,8 @@ export default baseMixins.extend<options>().extend({
     },
     totalHeight (): number {
       // This assumes each expanded row will be the same height as normal rows
-      const expansionHeight = Object.keys(this.expansion).length * this.rowHeight
-      return (this.itemsLength * this.rowHeight) + this.headerHeight + expansionHeight
+      const totalExpansionHeight = Object.keys(this.expansion).length * this.expansionHeight
+      return this.itemsLength * this.rowHeight + this.rowHeight + this.headerHeight + totalExpansionHeight
     },
     topIndex (): number {
       return Math.floor(this.scrollTop / this.rowHeight)
@@ -70,13 +78,16 @@ export default baseMixins.extend<options>().extend({
       return Math.floor(this.topIndex / this.chunkSize)
     },
     startIndex (): number {
-      return Math.max(0, (this.chunkIndex * this.chunkSize) - this.chunkSize)
+      // return Math.max(0, (this.chunkIndex * this.chunkSize) - this.chunkSize)
+      return Math.max(0, this.topIndex - this.chunkSize)
     },
     offsetTop (): number {
       return Math.max(0, this.startIndex * this.rowHeight)
     },
     stopIndex (): number {
-      return Math.min(this.startIndex + (this.chunkSize * 3), this.itemsLength)
+      // return Math.min(this.startIndex + (this.chunkSize * 3), this.itemsLength)
+      return this.startIndex === 0 ? Math.min(this.startIndex + this.visibleItems + this.chunkSize, this.itemsLength)
+        : Math.min(this.startIndex + this.visibleItems + this.chunkSize * 2, this.itemsLength)
     },
     offsetBottom (): number {
       return Math.max(0, (this.itemsLength - this.stopIndex - this.startIndex) * this.rowHeight)
@@ -89,7 +100,6 @@ export default baseMixins.extend<options>().extend({
     },
     items () {
       this.cachedItems = null
-      this.$refs.wrapper.scrollTop = 0
     },
   },
 

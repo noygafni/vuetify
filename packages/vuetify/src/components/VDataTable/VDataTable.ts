@@ -104,6 +104,8 @@ export default mixins(
     fixedHeader: Boolean,
     headersLength: Number,
     chunkSize: Number,
+    visibleItems: Number,
+    expansionHeight: Number,
     expandIcon: {
       type: String,
       default: '$expand',
@@ -573,14 +575,17 @@ export default mixins(
       }
 
       if (this.virtualRows) {
+        const headerHeight = this.dense ? 32 : 48
         return this.$createElement(VVirtualTable, {
           props: Object.assign(simpleProps, {
             items: props.items,
             height: this.height,
             rowHeight: this.dense ? 24 : 48,
-            headerHeight: this.dense ? 32 : 48,
+            headerHeight: this.hideDefaultHeader ? 0 : headerHeight,
             chunkSize: this.chunkSize,
             expansion: this.expansion,
+            visibleItems: this.visibleItems,
+            expansionHeight: this.expansionHeight,
           }),
           scopedSlots: {
             items: ({ items }) => this.genItems(items, props) as any,

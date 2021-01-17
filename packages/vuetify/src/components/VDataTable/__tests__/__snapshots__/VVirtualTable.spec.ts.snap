@@ -4,7 +4,7 @@ exports[`VVirtualTable.ts should re-render when items change 1`] = `
 <div class="v-data-table v-virtual-table theme--light">
   <div class="v-virtual-table__wrapper">
     <div class="v-virtual-table__table"
-         style="height: 192px;"
+         style="height: 240px;"
     >
       <table style="margin-top: 0px;">
         <tbody>
@@ -30,7 +30,7 @@ exports[`VVirtualTable.ts should re-render when items change 2`] = `
 <div class="v-data-table v-virtual-table theme--light">
   <div class="v-virtual-table__wrapper">
     <div class="v-virtual-table__table"
-         style="height: 192px;"
+         style="height: 240px;"
     >
       <table style="margin-top: 0px;">
         <tbody>
@@ -56,7 +56,7 @@ exports[`VVirtualTable.ts should render 1`] = `
 <div class="v-data-table v-virtual-table theme--light">
   <div class="v-virtual-table__wrapper">
     <div class="v-virtual-table__table"
-         style="height: 192px;"
+         style="height: 240px;"
     >
       <table style="margin-top: 0px;">
         <tbody>

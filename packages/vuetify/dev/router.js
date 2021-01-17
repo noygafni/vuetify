@@ -1,26 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Playground from './Playground.vue'
+import NewFeat from './NewFeat.vue'
 
 Vue.use(Router)
-
-const component1 = {
-  template: `<div class="title">Page 1</div>`,
-}
-const component2 = {
-  template: `<div class="title">Page 2</div>`,
-}
 
 const router = new Router({
   routes: [
     {
       path: '/page1',
       name: 'Page 1',
-      component: component1,
+      component: Playground,
     },
     {
       path: '/page2',
       name: 'Page 2',
-      component: component2,
+      component: NewFeat,
     },
     { path: '*', redirect: '/page1' },
   ],
