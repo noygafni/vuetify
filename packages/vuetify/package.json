@@ -1,7 +1,7 @@
 {
-  "name": "vuetify",
+  "name": "@noygafni/vuetify",
   "description": "Vue Material Component Framework",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "author": {
     "name": "John Leider",
     "email": "john@vuetifyjs.com"
@@ -9,8 +9,9 @@
   "license": "MIT",
   "homepage": "https://vuetifyjs.com",
   "repository": {
+    "owner": "noygafni",
     "type": "git",
-    "url": "git+https://github.com/vuetifyjs/vuetify.git",
+    "url": "git+https://github.com/noygafni/vuetify.git",
     "directory": "packages/vuetify"
   },
   "keywords": [
@@ -107,7 +108,7 @@
     "vue": "^2.6.4"
   },
   "publishConfig": {
-    "access": "public"
+    "registry":"https://npm.pkg.github.com"
   },
   "vetur": {
     "tags": "dist/json/tags.json",

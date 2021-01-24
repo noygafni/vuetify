@@ -3,9 +3,9 @@
     <v-data-table
         :items="items"
         :items-per-page="-1"
-        virtual-rows
         :chunk-size="5"
         :visible-items="16"
+        virtual-rows
         single-expand
         item-key="name"
         hide-default-header

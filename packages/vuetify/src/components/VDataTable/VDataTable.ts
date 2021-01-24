@@ -575,12 +575,12 @@ export default mixins(
       }
 
       if (this.virtualRows) {
-        const headerHeight = this.dense ? 32 : 48
+        const headerHeight = this.dense ? 37 : 48
         return this.$createElement(VVirtualTable, {
           props: Object.assign(simpleProps, {
             items: props.items,
             height: this.height,
-            rowHeight: this.dense ? 24 : 48,
+            rowHeight: this.dense ? 37 : 48,
             headerHeight: this.hideDefaultHeader ? 0 : headerHeight,
             chunkSize: this.chunkSize,
             expansion: this.expansion,

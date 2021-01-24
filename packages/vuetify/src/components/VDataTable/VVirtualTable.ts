@@ -69,7 +69,7 @@ export default baseMixins.extend<options>().extend({
     totalHeight (): number {
       // This assumes each expanded row will be the same height as normal rows
       const totalExpansionHeight = Object.keys(this.expansion).length * this.expansionHeight
-      return this.itemsLength * this.rowHeight + this.rowHeight + this.headerHeight + totalExpansionHeight
+      return this.itemsLength * this.rowHeight + this.headerHeight + totalExpansionHeight
     },
     topIndex (): number {
       return Math.floor(this.scrollTop / this.rowHeight)

@@ -45,7 +45,4 @@ export default {
     td {
         width: 16.4vw !important;
     }
-    tr {
-        height: 48px;
-    }
 </style>
